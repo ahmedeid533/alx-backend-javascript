@@ -2,11 +2,9 @@ import signUpUser from './4-user-promise';
 import uploadPhoto from './5-photo-reject';
 
 const handleProfileSignup = async (firstName, lastName, fileName) => {
-  const userPromise = signUpUser(firstName, lastName);
-  const photoPromise = uploadPhoto(fileName);
   const results = [];
   try {
-    const user = await userPromise;
+    const user = await signUpUser(firstName, lastName);
     results.push(
       {
         status: 'fulfilled',
@@ -22,7 +20,7 @@ const handleProfileSignup = async (firstName, lastName, fileName) => {
     );
   }
   try {
-    const photo = await photoPromise;
+    const photo = await uploadPhoto(fileName);
     results.push(
       {
         status: 'fulfilled',
@@ -37,6 +35,7 @@ const handleProfileSignup = async (firstName, lastName, fileName) => {
       },
     );
   }
+  return results;
 };
 
 export default handleProfileSignup;
